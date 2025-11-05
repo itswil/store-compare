@@ -1,7 +1,11 @@
+import { useStoreValue } from "@simplestack/store/react";
+import { userStoreS } from "./stores/user-simple-store";
 import { store as userStoreX, useUserX } from "./stores/user-xstate-store";
 import { useUserStoreZ } from "./stores/user-zustand";
 
 function App() {
+	const { age: ageS, name: nameS, skills: skillsS } = useStoreValue(userStoreS);
+
 	const { age: ageX, name: nameX, skills: skillsX } = useUserX();
 
 	const {
@@ -16,6 +20,52 @@ function App() {
 
 	return (
 		<>
+			<h1>Simple Store</h1>
+			<div>
+				<p>Age: {ageS}</p>
+				<p>Name: {nameS}</p>
+				<p>Skills: {skillsS.join(",")}</p>
+
+				<input
+					type="button"
+					value="Increment Age"
+					onClick={() => {
+						userStoreS.select("age").set(ageS + 1);
+					}}
+				/>
+				<form
+					onSubmit={(event) => {
+						event.preventDefault();
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
+						userStoreS.select("name").set(formData.get("name") as string);
+					}}
+				>
+					<input type="text" name="name" />
+					<button type="submit">Update Name</button>
+				</form>
+				<form
+					onSubmit={(event) => {
+						event.preventDefault();
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
+						userStoreS
+							.select("skills")
+							.set([...skillsS, formData.get("skill") as string]);
+					}}
+				>
+					<input type="text" name="skill" />
+					<button type="submit">Add Skill</button>
+				</form>
+				<button
+					type="button"
+					onClick={() => userStoreX.send({ type: "resetSkills" })}
+				>
+					Reset Skills
+				</button>
+			</div>
+
+			<hr />
 			<h1>XState Store</h1>
 			<div>
 				<p>Age: {ageX}</p>
