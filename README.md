@@ -1,4 +1,4 @@
-# XState Store v Zustand
+# Simple Store v XState Store v Zustand
 
 ## TLDR; Use Simple Store
 
