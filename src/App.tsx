@@ -1,4 +1,4 @@
-import { useUserX, store as userStoreX } from "./stores/user-xstate-store";
+import { store as userStoreX, useUserX } from "./stores/user-xstate-store";
 import { useUserStoreZ } from "./stores/user-zustand";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
 			<div>
 				<p>Age: {ageX}</p>
 				<p>Name: {nameX}</p>
-				<p>Skills: {skillsX}</p>
+				<p>Skills: {skillsX.join(",")}</p>
 
 				<input
 					type="button"
@@ -32,25 +32,29 @@ function App() {
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
 						userStoreX.send({
 							type: "updateName",
-							newName: event.target[0].value,
+							newName: (formData.get("name") as string) || "",
 						});
 					}}
 				>
-					<input type="text" />
+					<input type="text" name="name" />
 					<button type="submit">Update Name</button>
 				</form>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
 						userStoreX.send({
 							type: "addSkill",
-							newSkill: event.target[0].value,
+							newSkill: (formData.get("skill") as string) || "",
 						});
 					}}
 				>
-					<input type="text" />
+					<input type="text" name="skill" />
 					<button type="submit">Add Skill</button>
 				</form>
 				<button
@@ -67,7 +71,7 @@ function App() {
 			<div>
 				<p>Age: {ageZ}</p>
 				<p>Name: {nameZ}</p>
-				<p>Skills: {skillsZ}</p>
+				<p>Skills: {skillsZ.join(",")}</p>
 
 				<input
 					type="button"
@@ -79,19 +83,23 @@ function App() {
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
-						updateNameZ(event.target[0].value);
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
+						updateNameZ(formData.get("name") as string);
 					}}
 				>
-					<input type="text" name="lala" />
+					<input type="text" name="name" />
 					<button type="submit">Update Name</button>
 				</form>
 				<form
 					onSubmit={(event) => {
 						event.preventDefault();
-						addSkillZ(event.target[0].value);
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
+						addSkillZ(formData.get("skills") as string);
 					}}
 				>
-					<input type="text" />
+					<input type="text" name="skills" />
 					<button type="submit">Add Skill</button>
 				</form>
 				<button type="button" onClick={() => resetSkillsZ()}>
