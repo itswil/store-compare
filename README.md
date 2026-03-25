@@ -1,5 +1,7 @@
 # Simple Store v XState Store v Zustand
 
+[NPM Trends comparison](https://npmtrends.com/@tanstack/store-vs-@xstate/store-vs-simple-store-vs-zustand)
+
 ## TLDR; Use Simple Store
 
 [Simple Store](https://simple-stack.dev/store)
