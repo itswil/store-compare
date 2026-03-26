@@ -1,5 +1,4 @@
-import { createStore } from "@xstate/store";
-import { useSelector } from "@xstate/store/react";
+import { createStore } from "@xstate/store-react";
 
 export const store = createStore({
 	// context
@@ -10,24 +9,17 @@ export const store = createStore({
 	},
 	// transitions
 	on: {
-		incrementAge: {
-			age: (context, event: { by: number }) => context.age + event.by,
+		incrementAge: (context) => ({ ...context, age: context.age + 1 }),
+		updateName: (context, event: { newName: string }) => ({
+			...context,
+			name: event.newName,
+		}),
+		addSkill: (context, event: { newSkill: string }) => {
+			if (!context.skills.includes(event.newSkill)) {
+				return { ...context, skills: [...context.skills, event.newSkill] };
+			}
+			return context;
 		},
-		updateName: {
-			name: (_context, event: { newName: string }) => event.newName,
-		},
-		addSkill: {
-			skills: (context, event: { newSkill: string }) => {
-				if (!context.skills.includes(event.newSkill)) {
-					return [...context.skills, event.newSkill];
-				}
-				return context.skills;
-			},
-		},
-		resetSkills: {
-			skills: () => [],
-		},
+		resetSkills: (context) => ({ ...context, skills: [] }),
 	},
 });
-
-export const useUserX = () => useSelector(store, (state) => state.context);

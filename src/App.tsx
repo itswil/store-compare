@@ -1,8 +1,9 @@
 import { useStoreValue } from "@simplestack/store/react";
 import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@xstate/store-react";
 import { userStoreS } from "./stores/user-simple-store";
 import { userStoreT } from "./stores/user-tanstack-store";
-import { store as userStoreX, useUserX } from "./stores/user-xstate-store";
+import { store as userStoreX } from "./stores/user-xstate-store";
 import { useUserStoreZ } from "./stores/user-zustand";
 
 function App() {
@@ -10,17 +11,24 @@ function App() {
 	const { age: ageS, name: nameS, skills: skillsS } = useStoreValue(userStoreS);
 
 	// Tanstack Store
-	// const {
-	// 	age: ageT,
-	// 	name: nameT,
-	// 	skills: skillsT,
-	// } = useStore(userStoreT, (state) => state);
-	const ageT = useStore(userStoreT, (state) => state.age);
-	const nameT = useStore(userStoreT, (state) => state.name);
-	const skillsT = useStore(userStoreT, (state) => state.skills);
+	const {
+		age: ageT,
+		name: nameT,
+		skills: skillsT,
+	} = useStore(userStoreT, (state) => state);
+	// const ageT = useStore(userStoreT, (state) => state.age);
+	// const nameT = useStore(userStoreT, (state) => state.name);
+	// const skillsT = useStore(userStoreT, (state) => state.skills);
 
 	// XState Store
-	const { age: ageX, name: nameX, skills: skillsX } = useUserX();
+	const {
+		age: ageX,
+		name: nameX,
+		skills: skillsX,
+	} = useSelector(userStoreX, (state) => state.context);
+	// const ageX = useSelector(userStoreX, (state) => state.context.age);
+	// const nameX = useSelector(userStoreX, (state) => state.context.name);
+	// const skillsX = useSelector(userStoreX, (state) => state.context.skills);
 
 	// Zustand
 	const {
@@ -157,7 +165,7 @@ function App() {
 					type="button"
 					value="Increment Age"
 					onClick={() => {
-						userStoreX.send({ type: "incrementAge", by: 1 });
+						userStoreX.trigger.incrementAge();
 					}}
 				/>
 				<form
@@ -165,9 +173,8 @@ function App() {
 						event.preventDefault();
 						const form = event.target as HTMLFormElement;
 						const formData = new FormData(form);
-						userStoreX.send({
-							type: "updateName",
-							newName: (formData.get("name") as string) || "",
+						userStoreX.trigger.updateName({
+							newName: formData.get("name") as string,
 						});
 					}}
 				>
@@ -179,19 +186,15 @@ function App() {
 						event.preventDefault();
 						const form = event.target as HTMLFormElement;
 						const formData = new FormData(form);
-						userStoreX.send({
-							type: "addSkill",
-							newSkill: (formData.get("skill") as string) || "",
+						userStoreX.trigger.addSkill({
+							newSkill: formData.get("skill") as string,
 						});
 					}}
 				>
 					<input type="text" name="skill" />
 					<button type="submit">Add Skill</button>
 				</form>
-				<button
-					type="button"
-					onClick={() => userStoreX.send({ type: "resetSkills" })}
-				>
+				<button type="button" onClick={() => userStoreX.trigger.resetSkills()}>
 					Reset Skills
 				</button>
 			</div>
