@@ -1,9 +1,9 @@
 import { useSelector } from "@xstate/store-react";
-import { userStoreX } from "../stores/user-xstate-store";
+import { userStore } from "../stores/user-xstate-store";
 
 export function XStateStoreComponent() {
 	const { age, name, skills } = useSelector(
-		userStoreX,
+		userStore,
 		(state) => state.context,
 	);
 
@@ -17,14 +17,14 @@ export function XStateStoreComponent() {
 			<input
 				type="button"
 				value="Increment Age"
-				onClick={() => userStoreX.trigger.incrementAge()}
+				onClick={() => userStore.trigger.incrementAge()}
 			/>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
 					const form = event.target as HTMLFormElement;
 					const formData = new FormData(form);
-					userStoreX.trigger.updateName({
+					userStore.trigger.updateName({
 						newName: formData.get("name") as string,
 					});
 				}}
@@ -37,7 +37,7 @@ export function XStateStoreComponent() {
 					event.preventDefault();
 					const form = event.target as HTMLFormElement;
 					const formData = new FormData(form);
-					userStoreX.trigger.addSkill({
+					userStore.trigger.addSkill({
 						newSkill: formData.get("skill") as string,
 					});
 				}}
@@ -45,7 +45,7 @@ export function XStateStoreComponent() {
 				<input type="text" name="skill" />
 				<button type="submit">Add Skill</button>
 			</form>
-			<button type="button" onClick={() => userStoreX.trigger.resetSkills()}>
+			<button type="button" onClick={() => userStore.trigger.resetSkills()}>
 				Reset Skills
 			</button>
 		</div>

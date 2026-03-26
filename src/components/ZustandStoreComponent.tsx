@@ -1,8 +1,8 @@
-import { useUserStoreZ } from "../stores/user-zustand";
+import { useUserStore } from "../stores/user-zustand";
 
 export function ZustandStoreComponent() {
 	const { age, name, skills, incrementAge, updateName, addSkill, resetSkills } =
-		useUserStoreZ();
+		useUserStore();
 
 	return (
 		<div>

@@ -2,10 +2,10 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import App from "./App";
-import { userStoreS } from "./stores/user-simple-store";
-import { userStoreT } from "./stores/user-tanstack-store";
-import { userStoreX } from "./stores/user-xstate-store";
-import { useUserStoreZ } from "./stores/user-zustand";
+import { userStore as userStoreS } from "./stores/user-simple-store";
+import { userStore as userStoreT } from "./stores/user-tanstack-store";
+import { userStore as userStoreX } from "./stores/user-xstate-store";
+import { useUserStore as useUserStoreZ } from "./stores/user-zustand";
 
 describe("App", () => {
 	beforeEach(() => {

@@ -10,7 +10,7 @@ type Store = {
 	resetSkills: () => void;
 };
 
-export const useUserStoreZ = create<Store>((set) => ({
+export const useUserStore = create<Store>((set) => ({
 	age: 36,
 	name: "James",
 	skills: ["JS", "Go", "HTMX"],

@@ -1,8 +1,8 @@
 import { useStoreValue } from "@simplestack/store/react";
-import { userStoreS } from "../stores/user-simple-store";
+import { userStore } from "../stores/user-simple-store";
 
 export function SimpleStoreComponent() {
-	const { age, name, skills } = useStoreValue(userStoreS);
+	const { age, name, skills } = useStoreValue(userStore);
 
 	return (
 		<div>
@@ -14,14 +14,14 @@ export function SimpleStoreComponent() {
 			<input
 				type="button"
 				value="Increment Age"
-				onClick={() => userStoreS.select("age").set(age + 1)}
+				onClick={() => userStore.select("age").set(age + 1)}
 			/>
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();
 					const form = event.target as HTMLFormElement;
 					const formData = new FormData(form);
-					userStoreS.select("name").set(formData.get("name") as string);
+					userStore.select("name").set(formData.get("name") as string);
 				}}
 			>
 				<input type="text" name="name" />
@@ -33,7 +33,7 @@ export function SimpleStoreComponent() {
 					const form = event.target as HTMLFormElement;
 					const formData = new FormData(form);
 					const newSkill = formData.get("skill") as string;
-					userStoreS
+					userStore
 						.select("skills")
 						.set(
 							!skills.includes(newSkill) ? [...skills, newSkill] : [...skills],
@@ -43,7 +43,7 @@ export function SimpleStoreComponent() {
 				<input type="text" name="skill" />
 				<button type="submit">Add Skill</button>
 			</form>
-			<button type="button" onClick={() => userStoreS.select("skills").set([])}>
+			<button type="button" onClick={() => userStore.select("skills").set([])}>
 				Reset Skills
 			</button>
 		</div>

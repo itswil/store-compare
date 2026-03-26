@@ -1,7 +1,7 @@
 import { reset } from "@xstate/store/reset";
 import { createStore } from "@xstate/store-react";
 
-export const userStoreX = createStore({
+export const userStore = createStore({
 	// context
 	context: {
 		age: 36,

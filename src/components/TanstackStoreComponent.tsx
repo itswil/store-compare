@@ -1,8 +1,8 @@
 import { useStore } from "@tanstack/react-store";
-import { userStoreT } from "../stores/user-tanstack-store";
+import { userStore } from "../stores/user-tanstack-store";
 
 export function TanstackStoreComponent() {
-	const { age, name, skills } = useStore(userStoreT, (state) => state);
+	const { age, name, skills } = useStore(userStore, (state) => state);
 
 	return (
 		<div>
@@ -15,7 +15,7 @@ export function TanstackStoreComponent() {
 				type="button"
 				value="Increment Age"
 				onClick={() => {
-					userStoreT.setState((state) => ({ ...state, age: age + 1 }));
+					userStore.setState((state) => ({ ...state, age: age + 1 }));
 				}}
 			/>
 			<form
@@ -23,7 +23,7 @@ export function TanstackStoreComponent() {
 					event.preventDefault();
 					const form = event.target as HTMLFormElement;
 					const formData = new FormData(form);
-					userStoreT.setState((state) => ({
+					userStore.setState((state) => ({
 						...state,
 						name: formData.get("name") as string,
 					}));
@@ -38,7 +38,7 @@ export function TanstackStoreComponent() {
 					const form = event.target as HTMLFormElement;
 					const formData = new FormData(form);
 					const newSkill = formData.get("skill") as string;
-					userStoreT.setState((state) =>
+					userStore.setState((state) =>
 						state.skills.includes(newSkill)
 							? state
 							: { ...state, skills: [...state.skills, newSkill] },
@@ -50,7 +50,9 @@ export function TanstackStoreComponent() {
 			</form>
 			<button
 				type="button"
-				onClick={() => userStoreT.setState((state) => ({ ...state, skills: [] }))}
+				onClick={() =>
+					userStore.setState((state) => ({ ...state, skills: [] }))
+				}
 			>
 				Reset Skills
 			</button>
