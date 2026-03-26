@@ -3,12 +3,27 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import App from "./App";
 import { userStoreS } from "./stores/user-simple-store";
+import { userStoreT } from "./stores/user-tanstack-store";
+import { userStoreX } from "./stores/user-xstate-store";
+import { useUserStoreZ } from "./stores/user-zustand";
 
 describe("App", () => {
 	beforeEach(() => {
 		userStoreS.select("age").set(36);
 		userStoreS.select("name").set("James");
 		userStoreS.select("skills").set(["JS", "Go", "HTMX"]);
+
+		userStoreT.setState(() => {
+			return {
+				age: 36,
+				name: "James",
+				skills: ["JS", "Go", "HTMX"],
+			};
+		});
+
+		userStoreX.trigger.reset();
+
+		useUserStoreZ.setState(useUserStoreZ.getInitialState());
 	});
 
 	const getSimpleStoreSection = () => {
@@ -423,7 +438,7 @@ describe("App", () => {
 
 		it("adds skill on submit", async () => {
 			render(<App />);
-			const section = getXStateStoreSection();
+			const section = getZustandSection();
 			const skillInput = section?.querySelector(
 				'input[name="skill"]',
 			) as HTMLInputElement;
@@ -445,7 +460,7 @@ describe("App", () => {
 			render(<App />);
 			const section = getZustandSection();
 			const skillInput = section?.querySelector(
-				'input[name="skills"]',
+				'input[name="skill"]',
 			) as HTMLInputElement;
 
 			await act(async () => {

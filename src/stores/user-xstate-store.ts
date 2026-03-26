@@ -1,6 +1,7 @@
+import { reset } from "@xstate/store/reset";
 import { createStore } from "@xstate/store-react";
 
-export const store = createStore({
+export const userStoreX = createStore({
 	// context
 	context: {
 		age: 36,
@@ -22,4 +23,4 @@ export const store = createStore({
 		},
 		resetSkills: (context) => ({ ...context, skills: [] }),
 	},
-});
+}).with(reset());
