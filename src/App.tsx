@@ -72,9 +72,14 @@ function App() {
 						event.preventDefault();
 						const form = event.target as HTMLFormElement;
 						const formData = new FormData(form);
+						const newSkill = formData.get("skill") as string;
 						userStoreS
 							.select("skills")
-							.set([...skillsS, formData.get("skill") as string]);
+							.set(
+								!skillsS.includes(newSkill)
+									? [...skillsS, newSkill]
+									: [...skillsS],
+							);
 					}}
 				>
 					<input type="text" name="skill" />
@@ -128,11 +133,15 @@ function App() {
 						event.preventDefault();
 						const form = event.target as HTMLFormElement;
 						const formData = new FormData(form);
+						const newSkill = formData.get("skill") as string;
+
 						userStoreT.setState((state) => {
-							return {
-								...state,
-								skills: [...state.skills, formData.get("skill") as string],
-							};
+							return state.skills.includes(newSkill)
+								? state
+								: {
+										...state,
+										skills: [...state.skills, formData.get("skill") as string],
+									};
 						});
 					}}
 				>
