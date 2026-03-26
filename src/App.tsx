@@ -1,13 +1,28 @@
 import { useStoreValue } from "@simplestack/store/react";
+import { useStore } from "@tanstack/react-store";
 import { userStoreS } from "./stores/user-simple-store";
+import { userStoreT } from "./stores/user-tanstack-store";
 import { store as userStoreX, useUserX } from "./stores/user-xstate-store";
 import { useUserStoreZ } from "./stores/user-zustand";
 
 function App() {
+	// Simple Store
 	const { age: ageS, name: nameS, skills: skillsS } = useStoreValue(userStoreS);
 
+	// Tanstack Store
+	// const {
+	// 	age: ageT,
+	// 	name: nameT,
+	// 	skills: skillsT,
+	// } = useStore(userStoreT, (state) => state);
+	const ageT = useStore(userStoreT, (state) => state.age);
+	const nameT = useStore(userStoreT, (state) => state.name);
+	const skillsT = useStore(userStoreT, (state) => state.skills);
+
+	// XState Store
 	const { age: ageX, name: nameX, skills: skillsX } = useUserX();
 
+	// Zustand
 	const {
 		age: ageZ,
 		name: nameZ,
@@ -59,7 +74,73 @@ function App() {
 				</form>
 				<button
 					type="button"
-					onClick={() => userStoreX.send({ type: "resetSkills" })}
+					onClick={() => userStoreS.select("skills").set([])}
+				>
+					Reset Skills
+				</button>
+			</div>
+
+			<hr />
+			<h1>Tanstack Store</h1>
+			<div>
+				<p>Age: {ageT}</p>
+				<p>Name: {nameT}</p>
+				<p>Skills: {skillsT.join(",")}</p>
+
+				<input
+					type="button"
+					value="Increment Age"
+					onClick={() => {
+						userStoreT.setState((state) => {
+							return {
+								...state,
+								age: ageT + 1,
+							};
+						});
+					}}
+				/>
+				<form
+					onSubmit={(event) => {
+						event.preventDefault();
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
+						userStoreT.setState((state) => {
+							return {
+								...state,
+								name: formData.get("name") as string,
+							};
+						});
+					}}
+				>
+					<input type="text" name="name" />
+					<button type="submit">Update Name</button>
+				</form>
+				<form
+					onSubmit={(event) => {
+						event.preventDefault();
+						const form = event.target as HTMLFormElement;
+						const formData = new FormData(form);
+						userStoreT.setState((state) => {
+							return {
+								...state,
+								skills: [...state.skills, formData.get("skill") as string],
+							};
+						});
+					}}
+				>
+					<input type="text" name="skill" />
+					<button type="submit">Add Skill</button>
+				</form>
+				<button
+					type="button"
+					onClick={() =>
+						userStoreT.setState((state) => {
+							return {
+								...state,
+								skills: [],
+							};
+						})
+					}
 				>
 					Reset Skills
 				</button>
