@@ -1,4 +1,4 @@
-# Simple Store v XState Store v Zustand
+# Comparison of React stores
 
 [NPM Trends comparison](https://npmtrends.com/@tanstack/store-vs-@xstate/store-vs-simple-store-vs-zustand)
 
