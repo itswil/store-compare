@@ -1,6 +1,6 @@
 # Comparison of React stores
 
-[NPM Trends comparison](https://npmtrends.com/@tanstack/store-vs-@xstate/store-vs-simple-store-vs-zustand)
+[npmx comparison](https://npmx.dev/compare?packages=zustand,@simplestack/store,@tanstack/react-store,@xstate/store-react)
 
 ## Links
 
