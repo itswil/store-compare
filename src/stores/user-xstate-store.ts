@@ -1,13 +1,14 @@
-import { reset } from "@xstate/store/reset";
 import { createStore } from "@xstate/store-react";
+
+const initialState = {
+  age: 36,
+  name: "James",
+  skills: ["JS", "Go", "HTMX"],
+}
 
 export const userStore = createStore({
   // context
-  context: {
-    age: 36,
-    name: "James",
-    skills: ["JS", "Go", "HTMX"],
-  },
+  context: initialState,
   // transitions
   on: {
     incrementAge: (context) => ({ ...context, age: context.age + 1 }),
@@ -22,5 +23,6 @@ export const userStore = createStore({
       return context;
     },
     resetSkills: (context) => ({ ...context, skills: [] }),
+    reset: () => initialState
   },
-}).with(reset());
+});
