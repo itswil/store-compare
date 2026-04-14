@@ -3,7 +3,7 @@ import { userStore } from "../stores/user-simple-store";
 
 export function SimpleStoreComponent() {
   const { age, name, skills } = useStoreValue(userStore);
-  
+
   return (
     <div>
       <h2>Simple Store</h2>
@@ -14,6 +14,7 @@ export function SimpleStoreComponent() {
       <input
         type="button"
         value="Increment Age"
+        name="Increment Age"
         onClick={() => userStore.select("age").set(age + 1)}
       />
       <form
@@ -24,7 +25,7 @@ export function SimpleStoreComponent() {
           userStore.select("name").set(formData.get("name") as string);
         }}
       >
-        <input type="text" name="name" />
+        <input type="text" name="name" placeholder="Enter name" />
         <button type="submit">Update Name</button>
       </form>
       <form
@@ -38,7 +39,7 @@ export function SimpleStoreComponent() {
             .set(!skills.includes(newSkill) ? [...skills, newSkill] : [...skills]);
         }}
       >
-        <input type="text" name="skill" />
+        <input type="text" name="skill" placeholder="Enter skill" />
         <button type="submit">Add Skill</button>
       </form>
       <button type="button" onClick={() => userStore.select("skills").set([])}>

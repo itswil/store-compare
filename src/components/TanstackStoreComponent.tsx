@@ -29,7 +29,7 @@ export function TanstackStoreComponent() {
           }));
         }}
       >
-        <input type="text" name="name" />
+        <input type="text" name="name" placeholder="Enter name" />
         <button type="submit">Update Name</button>
       </form>
       <form
@@ -45,7 +45,7 @@ export function TanstackStoreComponent() {
           );
         }}
       >
-        <input type="text" name="skill" />
+        <input type="text" name="skill" placeholder="Enter skill" />
         <button type="submit">Add Skill</button>
       </form>
       <button
