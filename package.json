@@ -11,7 +11,7 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "preview": "vite preview",
-    "test": "vitest --config=vitest.browser.config.ts"
+    "test": "vitest"
   },
   "dependencies": {
     "@simplestack/store": "^0.7.7",
