@@ -2,7 +2,9 @@ import { useStore } from "@tanstack/react-store";
 import { userStore } from "../stores/user-tanstack-store";
 
 export function TanstackStoreComponent() {
-  const { age, name, skills } = useStore(userStore, (state) => state);
+  const age = useStore(userStore, (state) => state.age);
+  const name = useStore(userStore, (state) => state.name);
+  const skills = useStore(userStore, (state) => state.skills);
 
   return (
     <div>
