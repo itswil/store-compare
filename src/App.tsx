@@ -5,15 +5,12 @@ import { ZustandStoreComponent } from "./components/ZustandStoreComponent";
 
 function App() {
   return (
-    <>
+    <div className="container">
       <SimpleStoreComponent />
-      <hr />
       <TanstackStoreComponent />
-      <hr />
       <XStateStoreComponent />
-      <hr />
       <ZustandStoreComponent />
-    </>
+    </div>
   );
 }
 

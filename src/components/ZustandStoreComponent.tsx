@@ -4,7 +4,7 @@ export function ZustandStoreComponent() {
   const { age, name, skills, incrementAge, updateName, addSkill, resetSkills } = useUserStore();
 
   return (
-    <div>
+    <section className="section">
       <h2>Zustand</h2>
       <p>Age: {age}</p>
       <p>Name: {name}</p>
@@ -21,34 +21,36 @@ export function ZustandStoreComponent() {
         )}
       </div>
 
-      <input type="button" value="Increment Age" onClick={() => incrementAge(1)} />
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          const form = event.target as HTMLFormElement;
-          const formData = new FormData(form);
-          updateName(formData.get("name") as string);
-          form.reset();
-        }}
-      >
-        <input type="text" name="name" placeholder="Enter name" />
-        <button type="submit">Update Name</button>
-      </form>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          const form = event.target as HTMLFormElement;
-          const formData = new FormData(form);
-          addSkill(formData.get("skill") as string);
-          form.reset();
-        }}
-      >
-        <input type="text" name="skill" placeholder="Enter skill" />
-        <button type="submit">Add Skill</button>
-      </form>
-      <button type="button" onClick={() => resetSkills()}>
-        Reset Skills
-      </button>
-    </div>
+      <div className="controls">
+        <input type="button" value="Increment Age" onClick={() => incrementAge(1)} />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const form = event.target as HTMLFormElement;
+            const formData = new FormData(form);
+            updateName(formData.get("name") as string);
+            form.reset();
+          }}
+        >
+          <input type="text" name="name" placeholder="Enter name" />
+          <button type="submit">Update Name</button>
+        </form>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const form = event.target as HTMLFormElement;
+            const formData = new FormData(form);
+            addSkill(formData.get("skill") as string);
+            form.reset();
+          }}
+        >
+          <input type="text" name="skill" placeholder="Enter skill" />
+          <button type="submit">Add Skill</button>
+        </form>
+        <button type="button" onClick={() => resetSkills()}>
+          Reset Skills
+        </button>
+      </div>
+    </section>
   );
 }

@@ -7,7 +7,7 @@ export function TanstackStoreComponent() {
   const skills = useStore(userStore, (state) => state.skills);
 
   return (
-    <div>
+    <section className="section">
       <h2>Tanstack Store</h2>
       <p>Age: {age}</p>
       <p>Name: {name}</p>
@@ -24,51 +24,53 @@ export function TanstackStoreComponent() {
         )}
       </div>
 
-      <input
-        type="button"
-        value="Increment Age"
-        onClick={() => {
-          userStore.setState((state) => ({ ...state, age: age + 1 }));
-        }}
-      />
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          const form = event.target as HTMLFormElement;
-          const formData = new FormData(form);
-          userStore.setState((state) => ({
-            ...state,
-            name: formData.get("name") as string,
-          }));
-          form.reset();
-        }}
-      >
-        <input type="text" name="name" placeholder="Enter name" />
-        <button type="submit">Update Name</button>
-      </form>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          const form = event.target as HTMLFormElement;
-          const formData = new FormData(form);
-          const newSkill = formData.get("skill") as string;
-          userStore.setState((state) =>
-            state.skills.includes(newSkill)
-              ? state
-              : { ...state, skills: [...state.skills, newSkill] },
-          );
-          form.reset();
-        }}
-      >
-        <input type="text" name="skill" placeholder="Enter skill" />
-        <button type="submit">Add Skill</button>
-      </form>
-      <button
-        type="button"
-        onClick={() => userStore.setState((state) => ({ ...state, skills: [] }))}
-      >
-        Reset Skills
-      </button>
-    </div>
+      <div className="controls">
+        <input
+          type="button"
+          value="Increment Age"
+          onClick={() => {
+            userStore.setState((state) => ({ ...state, age: age + 1 }));
+          }}
+        />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const form = event.target as HTMLFormElement;
+            const formData = new FormData(form);
+            userStore.setState((state) => ({
+              ...state,
+              name: formData.get("name") as string,
+            }));
+            form.reset();
+          }}
+        >
+          <input type="text" name="name" placeholder="Enter name" />
+          <button type="submit">Update Name</button>
+        </form>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const form = event.target as HTMLFormElement;
+            const formData = new FormData(form);
+            const newSkill = formData.get("skill") as string;
+            userStore.setState((state) =>
+              state.skills.includes(newSkill)
+                ? state
+                : { ...state, skills: [...state.skills, newSkill] },
+            );
+            form.reset();
+          }}
+        >
+          <input type="text" name="skill" placeholder="Enter skill" />
+          <button type="submit">Add Skill</button>
+        </form>
+        <button
+          type="button"
+          onClick={() => userStore.setState((state) => ({ ...state, skills: [] }))}
+        >
+          Reset Skills
+        </button>
+      </div>
+    </section>
   );
 }
