@@ -44,7 +44,7 @@ export function TanstackStoreComponent() {
             form.reset();
           }}
         >
-          <input type="text" name="name" placeholder="Enter name" />
+          <input type="text" name="name" placeholder="Enter name" autoComplete="off" />
           <button type="submit">Update Name</button>
         </form>
         <form
@@ -61,7 +61,7 @@ export function TanstackStoreComponent() {
             form.reset();
           }}
         >
-          <input type="text" name="skill" placeholder="Enter skill" />
+          <input type="text" name="skill" placeholder="Enter skill" autoComplete="off" />
           <button type="submit">Add Skill</button>
         </form>
         <button
