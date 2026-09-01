@@ -1,10 +1,10 @@
-import { useStore } from "@tanstack/react-store";
+import { useSelector } from "@tanstack/react-store";
 import { userStore } from "../stores/user-tanstack-store";
 
 export function TanstackStoreComponent() {
-  const age = useStore(userStore, (state) => state.age);
-  const name = useStore(userStore, (state) => state.name);
-  const skills = useStore(userStore, (state) => state.skills);
+  const age = useSelector(userStore, (state) => state.age);
+  const name = useSelector(userStore, (state) => state.name);
+  const skills = useSelector(userStore, (state) => state.skills);
 
   return (
     <section className="section">
