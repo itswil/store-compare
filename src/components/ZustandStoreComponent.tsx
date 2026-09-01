@@ -8,7 +8,18 @@ export function ZustandStoreComponent() {
       <h2>Zustand</h2>
       <p>Age: {age}</p>
       <p>Name: {name}</p>
-      <p>Skills: {skills.join(",")}</p>
+      <div>
+        <span>Skills: </span>
+        {skills.length > 0 ? (
+          <ul>
+            {skills.map((skill) => (
+              <li key={skill}>{skill}</li>
+            ))}
+          </ul>
+        ) : (
+          <span>none</span>
+        )}
+      </div>
 
       <input type="button" value="Increment Age" onClick={() => incrementAge(1)} />
       <form
@@ -17,6 +28,7 @@ export function ZustandStoreComponent() {
           const form = event.target as HTMLFormElement;
           const formData = new FormData(form);
           updateName(formData.get("name") as string);
+          form.reset();
         }}
       >
         <input type="text" name="name" placeholder="Enter name" />
@@ -28,6 +40,7 @@ export function ZustandStoreComponent() {
           const form = event.target as HTMLFormElement;
           const formData = new FormData(form);
           addSkill(formData.get("skill") as string);
+          form.reset();
         }}
       >
         <input type="text" name="skill" placeholder="Enter skill" />

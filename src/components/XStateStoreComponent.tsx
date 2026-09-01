@@ -9,7 +9,18 @@ export function XStateStoreComponent() {
       <h2>XState Store</h2>
       <p>Age: {age}</p>
       <p>Name: {name}</p>
-      <p>Skills: {skills.join(",")}</p>
+      <div>
+        <span>Skills: </span>
+        {skills.length > 0 ? (
+          <ul>
+            {skills.map((skill) => (
+              <li key={skill}>{skill}</li>
+            ))}
+          </ul>
+        ) : (
+          <span>none</span>
+        )}
+      </div>
 
       <input type="button" value="Increment Age" onClick={() => userStore.trigger.incrementAge()} />
       <form
@@ -20,6 +31,7 @@ export function XStateStoreComponent() {
           userStore.trigger.updateName({
             newName: formData.get("name") as string,
           });
+          form.reset();
         }}
       >
         <input type="text" name="name" placeholder="Enter name" />
@@ -33,6 +45,7 @@ export function XStateStoreComponent() {
           userStore.trigger.addSkill({
             newSkill: formData.get("skill") as string,
           });
+          form.reset();
         }}
       >
         <input type="text" name="skill" placeholder="Enter skill" />

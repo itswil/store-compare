@@ -9,7 +9,18 @@ export function SimpleStoreComponent() {
       <h2>Simple Store</h2>
       <p>Age: {age}</p>
       <p>Name: {name}</p>
-      <p>Skills: {skills.join(",")}</p>
+      <div>
+        <span>Skills: </span>
+        {skills.length > 0 ? (
+          <ul>
+            {skills.map((skill) => (
+              <li key={skill}>{skill}</li>
+            ))}
+          </ul>
+        ) : (
+          <span>none</span>
+        )}
+      </div>
 
       <input
         type="button"
@@ -23,6 +34,7 @@ export function SimpleStoreComponent() {
           const form = event.target as HTMLFormElement;
           const formData = new FormData(form);
           userStore.select("name").set(formData.get("name") as string);
+          form.reset();
         }}
       >
         <input type="text" name="name" placeholder="Enter name" />
@@ -37,6 +49,7 @@ export function SimpleStoreComponent() {
           userStore
             .select("skills")
             .set(!skills.includes(newSkill) ? [...skills, newSkill] : [...skills]);
+          form.reset();
         }}
       >
         <input type="text" name="skill" placeholder="Enter skill" />

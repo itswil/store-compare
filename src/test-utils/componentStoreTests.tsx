@@ -20,7 +20,9 @@ export function defineStoreComponentTests({ name, reset, Component }: ComponentS
 
       expect(getByText("Age: 36")).toBeInTheDocument();
       expect(getByText("Name: James")).toBeInTheDocument();
-      expect(getByText("Skills: JS,Go,HTMX")).toBeInTheDocument();
+      expect(getByText("JS")).toBeInTheDocument();
+      expect(getByText("Go")).toBeInTheDocument();
+      expect(getByText("HTMX")).toBeInTheDocument();
     });
 
     it("increments age by 1 on click", async () => {
@@ -64,11 +66,11 @@ export function defineStoreComponentTests({ name, reset, Component }: ComponentS
       const submitButton = getByRole("button", { name: "Add Skill" });
       await submitButton.click();
 
-      expect(getByText("Skills: JS,Go,HTMX,Rust")).toBeInTheDocument();
+      expect(getByText("Rust")).toBeInTheDocument();
     });
 
     it("does not add duplicate skills", async () => {
-      const { getByRole, getByText, container } = await render(<Component />);
+      const { getByRole, container } = await render(<Component />);
 
       const skillInput = container.querySelector('input[name="skill"]') as HTMLInputElement;
       await userEvent.fill(skillInput, "JS");
@@ -76,7 +78,9 @@ export function defineStoreComponentTests({ name, reset, Component }: ComponentS
       const submitButton = getByRole("button", { name: "Add Skill" });
       await submitButton.click();
 
-      expect(getByText("Skills: JS,Go,HTMX")).toBeInTheDocument();
+      const listItems = container.querySelectorAll("li");
+      const jsItems = [...listItems].filter((item) => item.textContent === "JS");
+      expect(jsItems).toHaveLength(1);
     });
 
     it("clears all skills on click", async () => {
@@ -85,21 +89,43 @@ export function defineStoreComponentTests({ name, reset, Component }: ComponentS
       const resetButton = getByRole("button", { name: "Reset Skills" });
       await resetButton.click();
 
-      expect(getByText("Skills: ")).toBeInTheDocument();
+      expect(getByText("none")).toBeInTheDocument();
     });
 
     it("re-adds a skill after resetting", async () => {
       const { getByRole, getByText, container } = await render(<Component />);
 
       await getByRole("button", { name: "Reset Skills" }).click();
-      expect(getByText("Skills: ")).toBeInTheDocument();
+      expect(getByText("none")).toBeInTheDocument();
 
       const skillInput = container.querySelector('input[name="skill"]') as HTMLInputElement;
       await userEvent.fill(skillInput, "Go");
 
       await getByRole("button", { name: "Add Skill" }).click();
 
-      expect(getByText("Skills: Go")).toBeInTheDocument();
+      expect(getByText("Go")).toBeInTheDocument();
+    });
+
+    it("clears the name form after submit", async () => {
+      const { getByRole, container } = await render(<Component />);
+
+      const nameInput = container.querySelector('input[name="name"]') as HTMLInputElement;
+      await userEvent.fill(nameInput, "Alice");
+
+      await getByRole("button", { name: "Update Name" }).click();
+
+      expect(nameInput.value).toBe("");
+    });
+
+    it("clears the skill form after submit", async () => {
+      const { getByRole, container } = await render(<Component />);
+
+      const skillInput = container.querySelector('input[name="skill"]') as HTMLInputElement;
+      await userEvent.fill(skillInput, "Rust");
+
+      await getByRole("button", { name: "Add Skill" }).click();
+
+      expect(skillInput.value).toBe("");
     });
   });
 }
