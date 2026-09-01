@@ -6,7 +6,10 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   line-height: 1.5;
   color: #1a1a1a;
   background: #fafafa;
@@ -20,6 +23,10 @@ h2 {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 1.5rem 0 0.5rem;
+}
+
+p {
+  margin: 0.25rem 0;
 }
 
 div + div {
