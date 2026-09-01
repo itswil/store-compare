@@ -4,7 +4,7 @@ const initialState = {
   age: 36,
   name: "James",
   skills: ["JS", "Go", "HTMX"],
-}
+};
 
 export const userStore = createStore({
   // context
@@ -23,6 +23,6 @@ export const userStore = createStore({
       return context;
     },
     resetSkills: (context) => ({ ...context, skills: [] }),
-    reset: () => initialState
+    reset: () => initialState,
   },
 });
